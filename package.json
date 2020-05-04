@@ -17,7 +17,8 @@
     "express": "^4.15.2",
     "formidable": "^1.2.2",
     "hbs": "^4.1.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "static-eval": "^2.0.5"
   },
   "devDependencies": {
     "request": "^2.81.0",
