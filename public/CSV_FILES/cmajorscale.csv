@@ -1,0 +1,21 @@
+0, 0, Header, 0, 1, 480
+1, 0, Start_track
+1, 0, Tempo, 500000
+1, 0, Note_on_c, 0, 60, 127
+1, 960, Note_on_c, 0, 62, 127
+1, 960, Note_off_c, 0, 60, 90
+1, 1920, Note_on_c, 0, 64, 127
+1, 1920, Note_off_c, 0, 62, 90
+1, 2880, Note_on_c, 0, 65, 127
+1, 2880, Note_off_c, 0, 64, 90
+1, 3840, Note_on_c, 0, 67, 127
+1, 3840, Note_off_c, 0, 65, 90
+1, 4800, Note_on_c, 0, 69, 127
+1, 4800, Note_off_c, 0, 67, 90
+1, 5760, Note_on_c, 0, 71, 127
+1, 5760, Note_off_c, 0, 69, 90
+1, 6720, Note_on_c, 0, 72, 127
+1, 6720, Note_off_c, 0, 71, 90
+1, 7680, Note_off_c, 0, 72, 90
+1, 7680, End_track
+0, 0, End_of_file

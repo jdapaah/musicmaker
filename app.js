@@ -23,7 +23,9 @@ app.get('/', function (req, res){
 
 app.post('/success', function (req, res){
     var form = new formidable.IncomingForm();
-    form.parse(req);
+    var thefname = form.parse(req, function(err, fields, files){
+	console.log(files.iProducto);
+    });
     form.on('fileBegin',function(name, file){
         file.path ='public/MIDI_FILES/' + file.name;
         console.log('New file: ' + file.path);
@@ -38,15 +40,15 @@ app.post('/success', function (req, res){
     	       console.error("error: " + error);
     	       return;
             }
-            console.log('stdout: ' + stdout);
-            console.error('stderr: ' + stderr);
     	});
     // magenta stuff - generate files
         console.log('Initiated: ' + music_rnn.isInitialized())
     // for file in genereated folder:
         // child_process.exec('python3 move_around.py ' + fname );
     // return files to user
+    return fname;
     });
+    console.log('Does it work:' + thefname);
     // res.render('zip of the files?')
     res.render('pages/success.hbs');
 });
