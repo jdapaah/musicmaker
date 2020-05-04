@@ -23,9 +23,7 @@ app.get('/', function (req, res){
 
 app.post('/success', function (req, res){
     var form = new formidable.IncomingForm();
-    var thefname = form.parse(req, function(err, fields, files){
-	console.log(files.iProducto);
-    });
+    form.parse(req);
     form.on('fileBegin',function(name, file){
         file.path ='public/MIDI_FILES/' + file.name;
         console.log('New file: ' + file.path);
@@ -35,7 +33,7 @@ app.post('/success', function (req, res){
 	var fname = file.name.split('.')[0];
         var new_file = " public/CSV_FILES/"+ fname + ".csv" ;
         console.log('COMMAND: '+ execute + file.path + new_file);
-    	child_process.exec(execute + file.path + new_file, [cwd=__dirname], function(error, stdout, stderr){
+    	child_process.exec(execute + file.path + new_file, function(error, stdout, stderr){
     	    if (error) {
     	       console.error("error: " + error);
     	       return;

@@ -1,13 +1,14 @@
 {
-  "name": "magenta-music",
+  "name": "node-js-getting-started",
   "version": "0.3.0",
-  "description": "Senior Research Project for Jeremy Dapaah",
+  "description": "A sample Node.js app using Express 4",
   "engines": {
     "node": "12.x"
   },
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "@magenta/music": "^1.14.0",
@@ -25,14 +26,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jdapaah/musicmaker"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
     "node",
     "heroku",
-    "express",
-    "magenta",
-    "music"
+    "express"
   ],
   "license": "MIT"
 }
