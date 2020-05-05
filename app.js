@@ -16,10 +16,6 @@ music_rnn = new model.MusicRNN('https://storage.googleapis.com/magentadata/js/ch
 music_rnn.initialize();
 var app = express();
 
-app.get('/', function (req, res){
-    res.render('pages/main.hbs');
-});
-
 app.post('/success', function (req, res){
     var form = new formidable.IncomingForm();
     form.parse(req);
@@ -32,32 +28,48 @@ app.post('/success', function (req, res){
         const execute = "public/midicsv ";
         var new_file = " public/CSV_FILES/"+ fname + ".csv" ;
         console.log('COMMAND: '+ execute + file.path + new_file);
-    	child_process.exec(execute + file.path + new_file, function(error, stdout, stderr){
-    	    if (error) {
-    	       console.error("error: " + error);
-    	       return;
-            }
-    	});
+    	// child_process.exec(execute + file.path + new_file, function(error, stdout, stderr){
+    	//     if (error) {
+    	//        console.error("error: " + error);
+    	//        return;
+     //        }
+    	// });
         // magenta stuff - generate files
         console.log('Running: ' + music_rnn.isInitialized())
         var midifile = fs.readFileSync('public/MIDI_FILES/'+file.name);
+        console.log('--------UPLOADED----------');  
         var ns = core.midiToSequenceProto(midifile);
-        var qns = core.sequences.quantizeNoteSequence(ns, 480); ///////read from notesequence or csvmidi
+        console.log(ns);
+        console.log('--------QUANTIZE----------');
+        var qns = core.sequences.quantizeNoteSequence(ns, 1); // allows for 2^(k+1)th notes
         console.log(qns);
-        var newnotes = music_rnn.continueSequence(qns, 2400); ///////// read from totaltime ns or csvmdid
-        console.log(newnotes);
-        var newmidi = core.sequenceProtoToMidi('public/MIDI_FILES/new/mld-'+file.name);
-    // for file in genereated folder:
+        music_rnn
+        .continueSequence(qns, qns.totalQuantizedSteps, 1.0) //steps/-^ quarter notes
+        .then(function(sample){
+            console.log('--------MACHINE-----------');
+            for (var i = sample.notes.length - 1; i >= 0; i--) {
+                sample.notes[i].velocity = 120;
+            }
+        	console.log(sample);
+        	var newmidi = core.sequenceProtoToMidi(sample);
+        	fs.appendFileSync('public/MIDI_FILES/new/'+file.name, Buffer.from(newmidi));
+        	console.log('Number Crunch Complete');     })
+        .catch(function(reason){
+        	console.log('Something has gone terribly wrong');
+        	console.log(reason);       });
+        
         // child_process.exec('python3 public/move_around.py ' + public/MIDI_FILES/new/mld-'+file.name );
-    // return files to user
     });
     // res.render('zip of the files?')
-    res.render('pages/success.hbs');
+    res.render('templates/success.hbs');
 });
 
+app.get('/', function (req, res){
+    res.render('templates/main.hbs');
+});
 
 app.get('/choose', function(req, res){
-   res.render('pages/choose.hbs');
+   res.render('templates/choose.hbs');
 });
 
 app.listen(5000);
