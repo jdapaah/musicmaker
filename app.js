@@ -7,7 +7,7 @@ var fs = require('fs');
 
 const model = require('@magenta/music/node/music_rnn');
 const core = require('@magenta/music/node/core');
-//require('@tensorflow/tfjs-node');
+const tf = require('@tensorflow/tfjs-node');
 const globalAny = global;
 globalAny.performance = Date;
 globalAny.fetch = require('node-fetch');
@@ -39,18 +39,17 @@ app.post('/success', function (req, res){
             }
     	});
         // magenta stuff - generate files
-        console.log('Initiated: ' + music_rnn.isInitialized())
+        console.log('Running: ' + music_rnn.isInitialized())
         var midifile = fs.readFileSync('public/MIDI_FILES/'+file.name);
         var ns = core.midiToSequenceProto(midifile);
         var qns = core.sequences.quantizeNoteSequence(ns, 480); ///////read from notesequence or csvmidi
         console.log(qns);
-        var newnotes = music_rnn.continueSequence(qns, 7680); ///////// read from totaltime ns or csvmdid
+        var newnotes = music_rnn.continueSequence(qns, 2400); ///////// read from totaltime ns or csvmdid
         console.log(newnotes);
         var newmidi = core.sequenceProtoToMidi('public/MIDI_FILES/new/mld-'+file.name);
     // for file in genereated folder:
         // child_process.exec('python3 public/move_around.py ' + public/MIDI_FILES/new/mld-'+file.name );
     // return files to user
-    return fname;
     });
     // res.render('zip of the files?')
     res.render('pages/success.hbs');
