@@ -3,6 +3,7 @@ var formidable = require('formidable');
 var hbs = require('hbs');
 var child_process = require('child_process');
 var path  = require('path');
+var fs = require('fs');
 
 const model = require('@magenta/music/node/music_rnn');
 const core = require('@magenta/music/node/core');
@@ -13,8 +14,6 @@ globalAny.fetch = require('node-fetch');
 
 music_rnn = new model.MusicRNN('https://storage.googleapis.com/magentadata/js/checkpoints/music_rnn/melody_rnn');
 music_rnn.initialize();
-
-
 var app = express();
 
 app.get('/', function (req, res){
@@ -29,8 +28,8 @@ app.post('/success', function (req, res){
         console.log('New file: ' + file.path);
     });
     form.on('file', function(name, file){
-        var execute = "public/midicsv ";
-	var fname = file.name.split('.')[0];
+        var fname = file.name.split('.')[0];
+        const execute = "public/midicsv ";
         var new_file = " public/CSV_FILES/"+ fname + ".csv" ;
         console.log('COMMAND: '+ execute + file.path + new_file);
     	child_process.exec(execute + file.path + new_file, function(error, stdout, stderr){
@@ -39,14 +38,20 @@ app.post('/success', function (req, res){
     	       return;
             }
     	});
-    // magenta stuff - generate files
+        // magenta stuff - generate files
         console.log('Initiated: ' + music_rnn.isInitialized())
+        var midifile = fs.readFileSync('public/MIDI_FILES/'+file.name);
+        var ns = core.midiToSequenceProto(midifile);
+        var qns = core.sequences.quantizeNoteSequence(ns, 480); ///////read from notesequence or csvmidi
+        console.log(qns);
+        var newnotes = music_rnn.continueSequence(qns, 7680); ///////// read from totaltime ns or csvmdid
+        console.log(newnotes);
+        var newmidi = core.sequenceProtoToMidi('public/MIDI_FILES/new/mld-'+file.name);
     // for file in genereated folder:
-        // child_process.exec('python3 move_around.py ' + fname );
+        // child_process.exec('python3 public/move_around.py ' + public/MIDI_FILES/new/mld-'+file.name );
     // return files to user
     return fname;
     });
-    console.log('Does it work:' + thefname);
     // res.render('zip of the files?')
     res.render('pages/success.hbs');
 });
@@ -54,10 +59,6 @@ app.post('/success', function (req, res){
 
 app.get('/choose', function(req, res){
    res.render('pages/choose.hbs');
-});
-
-app.post('/choose', function(req, res){
-    //res.render('zip of the files?');
 });
 
 app.listen(5000);
