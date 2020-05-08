@@ -62,16 +62,16 @@ app.post('/success', function (req, res){
     });
     //combine the files to play synchronously
     // runmc(filename);
-    res.render(__dirname+'success');//, {name: filename});
+    res.render('success');//, {name: filename});
     // res.download('./public/MIDI_FILES/new/D14146541.midi')
 });
 
 app.get('/', function (req, res){
-    res.render(__dirname+'/main');
+    res.render('main');
 });
 
 app.get('/choose', function(req, res){
-   res.render(__dirname+'/choose');
+   res.render('choose');
 });
 
 
