@@ -3,7 +3,7 @@ var formidable = require('formidable');
 var hbs = require('hbs');
 var child_process = require('child_process');
 var path  = require('path');
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 5000;
 var fs = require('fs');
 
 const model = require('@magenta/music/node/music_rnn');
@@ -108,6 +108,6 @@ function runmc(fullfilename){
 }
 
 app
-.listen(PORT);
+.listen(PORT)
 .set('view engine', 'hbs')
-.set('views', path.join(__dirname, 'templates'))
+.set('views', path.join(__dirname, 'templates'));
