@@ -107,7 +107,6 @@ function runmc(fullfilename){
 
 }
 
-app
-.listen(PORT)
-.set('view engine', 'hbs')
-.set('views', path.join(__dirname, 'templates'));
+app.listen(PORT);
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'templates'));
