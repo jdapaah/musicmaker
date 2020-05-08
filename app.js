@@ -61,16 +61,16 @@ app.post('/success', function (req, res){
     });
     //combine the files to play synchronously
     // runmc(filename);
-    res.render('success.hbs');//, {name: filename});
+    res.render(__dirname+'success.hbs');//, {name: filename});
     // res.download('./public/MIDI_FILES/new/D14146541.midi')
 });
 
 app.get('/', function (req, res){
-    res.render('main.hbs');
+    res.render(__dirname+'main.hbs');
 });
 
 app.get('/choose', function(req, res){
-   res.render('choose.hbs');
+   res.render(__dirname+'choose.hbs');
 });
 
 
