@@ -3,6 +3,7 @@ var formidable = require('formidable');
 var hbs = require('hbs');
 var child_process = require('child_process');
 var path  = require('path');
+const PORT = process.env.PORT || 5000
 var fs = require('fs');
 
 const model = require('@magenta/music/node/music_rnn');
@@ -61,16 +62,16 @@ app.post('/success', function (req, res){
     });
     //combine the files to play synchronously
     // runmc(filename);
-    res.render(__dirname+'success.hbs');//, {name: filename});
+    res.render(__dirname+'success');//, {name: filename});
     // res.download('./public/MIDI_FILES/new/D14146541.midi')
 });
 
 app.get('/', function (req, res){
-    res.render(__dirname+'main.hbs');
+    res.render(__dirname+'/main');
 });
 
 app.get('/choose', function(req, res){
-   res.render(__dirname+'choose.hbs');
+   res.render(__dirname+'/choose');
 });
 
 
@@ -106,4 +107,7 @@ function runmc(fullfilename){
 
 }
 
-app.listen(process.env.PORT || 5000);
+app
+.listen(PORT);
+.set('view engine', 'hbs')
+.set('views', path.join(__dirname, 'templates'))
