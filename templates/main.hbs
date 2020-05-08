@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>The MUSIC MAKER!</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(
+    function(){
+        $('input:submit').attr('disabled',true);
+        $('input:file').change(
+            function(){
+                if ($(this).val()){
+                    $('input:submit').removeAttr('disabled'); 
+                }
+                else {
+                    $('input:submit').attr('disabled',true);
+                }
+            });
+    });
+</script>
+</head>
+<body>
+    <h1>
+        Welcome one, welcome all, to the All-Powerful 
+        <i><b><span style="color:#ff8000">MUSIC</span> <span style="color:#33cc33">MAKER</span></b></i>!!
+    </h1>
+    <form action = "/success" method = "post" enctype="multipart/form-data">
+        <input type="file" name="fName" >
+        <input type ="submit" value="Upload">
+        <div>
+            <input type="range" min="0.01" max="1.51" value="0.76" step='0.01'class="slider" name="temp">
+            <label for="temp">Temperature</label>
+            <p>Indicate how close to the original you want your output to be, from identical to completely random</p>
+        </div>
+        <div>
+            <select name="division">
+                <option value="1">Quarter Notes</option>
+                <option value="2">Eighth Notes</option>
+                <option value="4">Sixteenth Notes</option>
+                <option value="8">32nd Notes</option>
+            </select>
+            <label>Select the smallest note division possible</label>
+        </div>
+    </form>
+    <a href="/choose">Pick an existing file instead</a><br>
+    <p>Don't have a MIDI file to upload? 
+    <a href="https://onlinesequencer.net/" target="_blank">Create a MIDI file here.</a>
+    <br>Download it there, and then reupload it here!</p>
+</body>
+</html>
