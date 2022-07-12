@@ -1,7 +1,8 @@
 # Music Maker
 
-## --Under Development- Currently Offline--
-TJHSST Senior Research Project by Jeremy Dapaah. This project takes advantage of the [magenta-js](https://github.com/magenta/magenta-js) library to use machine learning to create music.
-All you need to do is pick a file to upload, or a preexisting one, select some options, and watch your music come to life. This is the **Music Maker!**
+**DEPRECATED and Rebuilt as [Harmonic Blue](https://github.com/jdapaah/HarmonicBlue)**
 
-This site was also live on [heroku](https://magenta-music.herokuapp.com)
+<p>I originally built this project in 2019-2020 as a senior research project at TJHSST. It was my first web project, and I had very little idea what I was doing. After taking a web development course in 2022, I decided I would return to refurnish my old friend.
+</p>
+
+Wish me luck!
